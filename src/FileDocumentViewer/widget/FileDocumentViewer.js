@@ -10,28 +10,27 @@ mendix.widget.declare("FileDocumentViewer.widget.FileDocumentViewer", {
 	],
 	
 	inputargs: {
-		title					: "",  
-		width          : 0,	
-		height         : 0,
-		txtenlarge 		: "",
-		txtpopout			: "",
-		showheader : true
+		title		: "",  
+		width		: 0,	
+		height		: 0,
+		txtenlarge	: "",
+		txtpopout	: "",
+		showheader	: true
 	},
 	templatePath  : mx.moduleUrl("FileDocumentViewer.widget", "templates/FileDocumentViewer.html"),
 	
 	domNode		: null,
-	iframe    : null,
-	titleNode : null,
-	eventEnlarge : null,
-	eventPopout  : null,
-	filedoc : null,
-	windowObj : null,
+	iframe		: null,
+	titleNode	: null,
+	filedoc		: null,
+	windowObj	: null,
 	
 	postCreate : function() {
 		logger.debug(this.id + ".postCreate");
 		
-		if (!this.showheader)
-				dojo.style(this.toolbarNode, 'display', 'none');
+		if (!this.showheader) {
+			dojo.style(this.toolbarNode, 'display', 'none');
+		}
 		
 		this.windowObj = this.iframe.contentWindow;
 
@@ -50,19 +49,21 @@ mendix.widget.declare("FileDocumentViewer.widget.FileDocumentViewer", {
 				'overflow': 'auto'
 		});
 		
-		this.actRendered();
+		this.actLoaded();
 	},
 	
 		//received the context
 	applyContext : function(context, callback){
 		logger.debug(this.id + ".applyContext"); 
-		if (context) 
+		if (context)  {
 			mx.processor.getObject(context.getActiveGUID(), dojo.hitch(this, this.setContextObject));
-		else {
+		} else {
 			logger.warn(this.id + ".applyContext received empty context");
 		        this.windowObj.location.replace(mx.moduleUrl("FileDocumentViewer.widget", "styles/blank.html"));
 		}
-		callback && callback();
+		if (callback) {
+			callback();
+		}
 	},
 	
 	setContextObject : function(filedoc) {
@@ -72,19 +73,22 @@ mendix.widget.declare("FileDocumentViewer.widget.FileDocumentViewer", {
 	
 	
 	getFileUrl : function() {
-		if (this.filedoc == null || this.filedoc.getAttribute("FileID") == null)
-			return mx.moduleUrl("FileDocumentViewer.widget", "styles/error.html");
-		else
-			return "file?target=window&fileID=" + this.filedoc.getAttribute('FileID');
+		var url;
+		if (this.filedoc == null || this.filedoc.getAttribute("Name") == null) {
+			url = mx.moduleUrl("FileDocumentViewer.widget", "styles/error.html");
+		} else {
+			url ="file?target=window&guid=" + this.filedoc.getGUID() + "&csrfToken=" + mx.session.getCSRFToken() + "&time=" + Date.now();
+		}
+		return url;
 	},
 	
 	loadIFrame : function() {
-			this.iframe.contentWindow.location.replace(this.getFileUrl());
+		this.iframe.contentWindow.location.replace(this.getFileUrl());
 	},
 	
 	eventEnlarge : function() {
 		dojo.style(this.iframe, {
-			height: dojo.style(this.iframe, 'height') * 1.5
+			height: dojo.style(this.iframe, 'height') * 1.5 
 		});
 	},
 	
