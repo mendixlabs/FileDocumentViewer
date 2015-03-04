@@ -2,7 +2,7 @@
 <package xmlns="http://www.mendix.com/package/1.0/">
 	<clientModule name="FileDocumentViewer" version="0.1" xmlns="http://www.mendix.com/clientModule/1.0/">
 		<widgetFiles>
-			<widgetFile path="FileDocumentViewer/widget/FileDocumentViewer.xml"/>
+			<widgetFile path="FileDocumentViewer/FileDocumentViewer.xml"/>
 		</widgetFiles>
 		<files>
 			<file path="FileDocumentViewer/widget/"/>
