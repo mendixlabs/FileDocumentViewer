@@ -1,9 +1,9 @@
-<div class="FileDocumentViewer" dojoAttachPoint="domNode">
-	<div class="toolbar" dojoAttachPoint="toolbarNode">
-		<h1 dojoAttachPoint="titleNode"></h1>
-		<a href="javascript:void 0" class="enlarge" dojoAttachPoint="enlargeNode">Enlarge</a>
-		<a href="javascript:void 0" class="popout"  dojoAttachPoint="popoutNode">Popout</a>
+<div class="FileDocumentViewer mx-groupbox" >
+	<h2 class="mx-groupbox-header" dojoAttachPoint="toolbarNode">
+		<i class="glyphicon mx-groupbox-collapse-icon glyphicon-fullscreen" style="margin-right:10px; cursor:pointer;" dojoAttachPoint="enlargeNode"></i>
+		<i class="glyphicon mx-groupbox-collapse-icon glyphicon-new-window" style="margin-right:10px; cursor:pointer;" dojoAttachPoint="popoutNode"></i>
+	</h2>
+	<div class="mx-groupbox-body">
+		<iframe dojoAttachPoint="iframeNode" class="documentiframe" style="height: 0px" />
 	</div>
-	<iframe dojoAttachPoint="iframe" class="documentiframe" style="height: 0px">
-	</iframe>
 </div>

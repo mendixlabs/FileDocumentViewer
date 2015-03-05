@@ -2,13 +2,12 @@
 /*global mx, define, require, browser, devel, console */
 /*mendix */
 
-
 // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 require( [
 	'dojo/_base/declare', 'mxui/widget/_WidgetBase', 'dijit/_TemplatedMixin',
-	'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-prop', 'dojo/dom-geometry', 'dojo/dom-class', 'dojo/dom-style', 'dojo/html', 'dojo/dom-construct', 'dojo/_base/array', 'dojo/_base/lang', 'dojo/text',
+	'mxui/dom', 'dojo/dom', 'dojo/query', 'dojo/dom-attr','dojo/dom-construct', 'dojo/dom-style', 'dojo/_base/lang', 'dojo/text',
 	'dojo/text!FileDocumentViewer/widget/templates/FileDocumentViewer.html'
-], function (declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domProp, domGeom, domClass, domStyle, html, domConstruct, dojoArray, lang, text, widgetTemplate) {
+], function (declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
 	'use strict';
 
 	// Declare widget's prototype.
@@ -33,17 +32,11 @@ require( [
 			if (!this.showheader) {
 				domStyle.set(this.toolbarNode, 'display', 'none');
 			}
-
-			this.windowObj = this.iframe.contentWindow;
-
-			html.set(this.titleNode, this.title);
-			html.set(this.enlargeNode, this.txtenlarge);
-			html.set(this.popoutNode, this.txtpopout);
 			
 			domStyle.set(this.domNode, {
 				'width': this.width === 0 ? 'auto' : this.width + 'px'
 			});
-			domStyle.set(this.iframe, {
+			domStyle.set(this.iframeNode, {
 				'height': this.height === 0 ? 'auto' : this.height + 'px',
 				'width' : '100%',
 				'overflow': 'auto'
@@ -65,9 +58,10 @@ require( [
 		
 		_updateRendering: function () {
 			if (this._contextObj)  {
-				this.iframe.contentWindow.location.replace(this._getFileUrl());
+				domAttr.set(this.iframeNode, "src", this._getFileUrl());
+				this.toolbarNode.appendChild(document.createTextNode(this._contextObj.get('Name')));
 			} else {
-				this.windowObj.location.replace(mx.moduleUrl("FileDocumentViewer.widget", "ui/blank.html"));
+				domAttr.set(this.iframeNode, "src", mx.moduleUrl("FileDocumentViewer.widget", "ui/blank.html"));
 			}
 		},
 
@@ -87,8 +81,8 @@ require( [
 		},
 		
 		_setupEvents : function(){
-			this.connect(this.enlargeNode, "onclick", lang.hitch(this, this._eventEnlarge));
-			this.connect(this.popoutNode, "onclick", lang.hitch(this, this._eventPopout));
+			this.connect(this.enlargeNode, "onclick", this._eventEnlarge);
+			this.connect(this.popoutNode, "onclick",  this._eventPopout);
 		},
 		
 		_getFileUrl : function() {
@@ -102,14 +96,13 @@ require( [
 		},
 
 		_eventEnlarge : function() {
-			domStyle.set(this.iframe, {
-				height: domStyle.set(this.iframe, 'height') * 1.5 
+			domStyle.set(this.iframeNode, {
+				height: (domStyle.get(this.iframeNode, 'height') * 1.5) +'px'
 			});
 		},
 
 		_eventPopout : function() {
 			window.open(this._getFileUrl());
 		}
-	}
-);
+	});
 });
