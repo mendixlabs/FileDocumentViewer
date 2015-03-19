@@ -11,3 +11,8 @@ Add the widget to a dataview. The context object should inherit from the System.
 
 ## Features
 The widget tries to display a document inside a form, however it might fail to do this (in which case a download popup is opened) since the browser settings determine whether it is allowed or not to open a document inside a form. For example IE might succeed in opening a .doc file inside a form and fail in opening a .png image inside a form, while exactly the opposite might be true for FireFox.
+
+## Properties
+
+* `Title` - String attribute of which the contents will be set in the header.
+* `Show header` - Determines whether or not a header will be rendered.
