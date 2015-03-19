@@ -8,11 +8,14 @@ GgDJqRaII7AYrJZ4jP12OqwEADs=</icon>
 
   <properties>
     <!-- make literal or attribute target conditional -->
-	<!--<property key="title" type="translatableString" required="true">
+	<property key="headertitle" type="attribute" required="true">
       <caption>Title</caption>
       <category>Appearance</category>
       <description>The caption of the viewer.</description>
-    </property>-->
+	  <attributeTypes>
+			<attributeType name="String"/>
+	  </attributeTypes>
+    </property>
 		<property key="width" type="integer" defaultValue="0">
       <caption>Width</caption>
       <category>Appearance</category>
@@ -28,15 +31,5 @@ GgDJqRaII7AYrJZ4jP12OqwEADs=</icon>
 				<category>Appearance</category>
 				<description>If true, a header including a 'pop out' and 'enlarge' button will be shown</description>
 		</property>
-	<!--<property key="txtenlarge" type="translatableString" required="true">
-      <caption>Enlarge caption</caption>
-      <category>Appearance</category>
-      <description>The tooltip of the enlarge button.</description>
-    </property>
-	<property key="txtpopout" type="translatableString" required="true">
-      <caption>Popout caption</caption>
-      <category>Appearance</category>
-      <description>The tooltip of the popout (open in new window) button</description>
-    </property>-->
 	</properties>
 </widget>

@@ -27,7 +27,6 @@ require( [
 
 		// dijit._WidgetBase.postCreate is called after constructing the widget. Implement to do extra setup work.
 		postCreate: function () {
-			console.log(this.id + '.postCreate');
 
 			if (!this.showheader) {
 				domStyle.set(this.toolbarNode, 'display', 'none');
@@ -39,7 +38,7 @@ require( [
 			domStyle.set(this.iframeNode, {
 				'height': this.height === 0 ? 'auto' : this.height + 'px',
 				'width' : '100%',
-				'overflow': 'auto'
+				'border-width': 0
 			});
 
 			this._setupEvents();
@@ -47,7 +46,6 @@ require( [
 
 		// mxui.widget._WidgetBase.update is called when context is changed or initialized. Implement to re-render and / or fetch data.
 		update: function (obj, callback) {
-			console.log(this.id + '.update');
 
 			this._contextObj = obj;
 			this._resetSubscriptions();
@@ -57,11 +55,12 @@ require( [
 		},
 		
 		_updateRendering: function () {
-			if (this._contextObj)  {
+			if (this._contextObj && this._contextObj.getAttribute('HasContents'))  {
 				domAttr.set(this.iframeNode, "src", this._getFileUrl());
-				this.toolbarNode.appendChild(document.createTextNode(this._contextObj.get('Name')));
+				domAttr.set(this.headerTextNode, 'innerHTML',this._contextObj.get(this.headertitle));
 			} else {
 				domAttr.set(this.iframeNode, "src", mx.moduleUrl("FileDocumentViewer.widget", "ui/blank.html"));
+				domAttr.set(this.headerTextNode, 'innerHTML','...');
 			}
 		},
 
