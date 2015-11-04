@@ -24,10 +24,11 @@ require( [
 		_handle: null,
 		_contextObj: null,
 		_objProperty: null,
+		iframeNode:null,
 
 		// dijit._WidgetBase.postCreate is called after constructing the widget. Implement to do extra setup work.
 		postCreate: function () {
-
+			
 			if (!this.showheader) {
 				domStyle.set(this.toolbarNode, 'display', 'none');
 			}
@@ -35,13 +36,20 @@ require( [
 			domStyle.set(this.domNode, {
 				'width': this.width === 0 ? 'auto' : this.width + 'px'
 			});
+
+			this._setupEvents();
+		},
+		
+		_iframeNodeCreate: function() {
+			this.iframeNode = domConstruct.create("iframe", null, this.groupboxBody);
+			domAttr.set(this.iframeNode, "id", "iframeNode");
+			domAttr.set(this.iframeNode, "class", "documentiframe");
+			
 			domStyle.set(this.iframeNode, {
 				'height': this.height === 0 ? 'auto' : this.height + 'px',
 				'width' : '100%',
 				'border-width': 0
 			});
-
-			this._setupEvents();
 		},
 
 		// mxui.widget._WidgetBase.update is called when context is changed or initialized. Implement to re-render and / or fetch data.
@@ -55,6 +63,11 @@ require( [
 		},
 		
 		_updateRendering: function () {
+			
+			domConstruct.destroy("iframeNode");
+			this.iframeNode = null;
+			this._iframeNodeCreate();
+			
 			if (this._contextObj && this._contextObj.getAttribute('HasContents'))  {
 				domAttr.set(this.iframeNode, "src", this._getFileUrl());
 				domAttr.set(this.headerTextNode, 'innerHTML',this._contextObj.get(this.headertitle));
