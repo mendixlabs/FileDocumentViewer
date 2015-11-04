@@ -10,13 +10,14 @@ require( [
     'mxui/dom',
     'dojo/dom',
     'dojo/query',
+    'dojo/dom-class',
     'dojo/dom-attr',
     'dojo/dom-construct',
     'dojo/dom-style',
     'dojo/_base/lang',
     'dojo/text',
     'dojo/text!FileDocumentViewer/widget/templates/FileDocumentViewer.html'
-], function (declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
+], function (declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domClass, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
     'use strict';
 
     // Declare widget's prototype.
@@ -40,6 +41,7 @@ require( [
 
             if (!this.showheader) {
                 domStyle.set(this.toolbarNode, 'display', 'none');
+                domClass.add(this.groupboxBody, 'no-header');
             }
 
             domStyle.set(this.domNode, {
