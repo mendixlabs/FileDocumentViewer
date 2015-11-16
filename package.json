@@ -1,6 +1,6 @@
 {
   "name": "FileDocumentViewer",
-  "version": "1.7.0",
+  "version": "2.1.0",
   "description": "This widget lets you view file documents.",
   "private": true,
   "dependencies": {},

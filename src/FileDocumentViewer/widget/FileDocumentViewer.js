@@ -4,6 +4,7 @@
 
 // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
 require( [
+    'require', // require.toUrl
     'dojo/_base/declare',
     'mxui/widget/_WidgetBase',
     'dijit/_TemplatedMixin',
@@ -17,7 +18,7 @@ require( [
     'dojo/_base/lang',
     'dojo/text',
     'dojo/text!FileDocumentViewer/widget/templates/FileDocumentViewer.html'
-], function (declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domClass, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
+], function (require, declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domClass, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
     'use strict';
 
     // Declare widget's prototype.
@@ -72,18 +73,18 @@ require( [
 
             callback();
         },
-        
+
         _updateRendering: function () {
-            
+
             domConstruct.destroy('iframeNode');
             this.iframeNode = null;
             this._iframeNodeCreate();
-            
-            if (this._contextObj && this._contextObj.getAttribute('HasContents'))  {
+
+            if (this._contextObj && this._contextObj.get('HasContents'))  {
                 domAttr.set(this.iframeNode, 'src', this._getFileUrl());
                 domAttr.set(this.headerTextNode, 'innerHTML',this._contextObj.get(this.headertitle));
             } else {
-                domAttr.set(this.iframeNode, 'src', mx.moduleUrl('FileDocumentViewer.widget', 'ui/blank.html'));
+                domAttr.set(this.iframeNode, 'src', require.toUrl('FileDocumentViewer/widget/ui/blank.html'))
                 domAttr.set(this.headerTextNode, 'innerHTML','...');
             }
         },
@@ -110,10 +111,10 @@ require( [
 
         _getFileUrl : function() {
             var url;
-            if (this._contextObj === null || this._contextObj.getAttribute('Name') === null) {
-                url = mx.moduleUrl('FileDocumentViewer.widget', 'ui/error.html');
+            if (this._contextObj === null || this._contextObj.get('Name') === null) {
+                url = require.toUrl('FileDocumentViewer/widget/ui/error.html');
             } else {
-                url = 'file?target=window&guid=' + this._contextObj.getGUID() + '&csrfToken=' + mx.session.getCSRFToken() + '&time=' + Date.now();
+                url = 'file?target=window&guid=' + this._contextObj.getGuid() + '&csrfToken=' + mx.session.getCSRFToken() + '&time=' + Date.now();
             }
             return url;
         },
