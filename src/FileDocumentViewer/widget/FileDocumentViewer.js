@@ -76,7 +76,7 @@ require( [
 
         _updateRendering: function () {
 
-            domConstruct.destroy('iframeNode');
+            domConstruct.destroy(this.iframeNode);
             this.iframeNode = null;
             this._iframeNodeCreate();
 
