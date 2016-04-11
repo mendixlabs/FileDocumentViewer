@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="FileDocumentViewer.widget.FileDocumentViewer" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
-	<name>File Document Viewer</name>
-	<description>A File Document Viewer. Should be  used in a FileDocument based dataview</description>
-	<icon>R0lGODlhEgASAKIHAHd3d8zMzO7u7qqqqoiIiLu7u////////yH5BAEAAAcALAAAAAASABIAAANL
-eLrcHSXK4VgxOBdaz83YxTkf+I0WiA1EiyqlihGknAl0E8t5ahu4mk2wEcpOOlus57ENQMyYAGh4
-GgDJqRaII7AYrJZ4jP12OqwEADs=</icon>
+    <name>File Document Viewer</name>
+    <description>A File Document Viewer. Should be  used in a FileDocument based dataview</description>
+    <icon>R0lGODlhEgASAKIHAHd3d8zMzO7u7qqqqoiIiLu7u////////yH5BAEAAAcALAAAAAASABIAAANL
+        eLrcHSXK4VgxOBdaz83YxTkf+I0WiA1EiyqlihGknAl0E8t5ahu4mk2wEcpOOlus57ENQMyYAGh4
+        GgDJqRaII7AYrJZ4jP12OqwEADs=</icon>
 
-	<properties>
-		<!-- make literal or attribute target conditional -->
-		<property key="headertitle" type="attribute" required="true">
-			<caption>Title</caption>
-			<category>Appearance</category>
-			<description>The caption of the viewer.</description>
-		<attributeTypes>
-			<attributeType name="String"/>
-		</attributeTypes>
-		</property>
-		<property key="width" type="integer" defaultValue="0">
-			<caption>Width</caption>
-			<category>Appearance</category>
-			<description>Width of the viewer in pixels. Use '0' for auto. The height will depend on the contents. </description>
-		</property>
-		<property key="height" type="integer" defaultValue="400">
-			<caption>Height</caption>
-			<category>Appearance</category>
-			<description>Height of the viewer in pixels. Use '0' to determine the width automatically. This will use any remaining space.</description>
-		</property>
-		<property key="showheader" type="boolean" defaultValue="true">
-			<caption>Show header</caption>
-			<category>Appearance</category>
-			<description>If true, a header including a 'pop out' and 'enlarge' button will be shown</description>
-		</property>
-	</properties>
-</widget>
+        <properties>
+            <!-- make literal or attribute target conditional -->
+            <property key="headertitle" type="attribute" required="true">
+                <caption>Title</caption>
+                <category>Appearance</category>
+                <description>The caption of the viewer.</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+            <property key="width" type="integer" defaultValue="0">
+                <caption>Width</caption>
+                <category>Appearance</category>
+                <description>Width of the viewer in pixels. Use '0' for auto. The height will depend on the contents. </description>
+            </property>
+            <property key="height" type="integer" defaultValue="400">
+                <caption>Height</caption>
+                <category>Appearance</category>
+                <description>Height of the viewer in pixels. Use '0' to determine the width automatically. This will use any remaining space.</description>
+            </property>
+            <property key="showheader" type="boolean" defaultValue="true">
+                <caption>Show header</caption>
+                <category>Appearance</category>
+                <description>If true, a header including a 'pop out' and 'enlarge' button will be shown</description>
+            </property>
+            <property key="usePDFjs" type="boolean" defaultValue="false">
+                <caption>Use PDF js</caption>
+                <category>PDF</category>
+                <description>Some browsers (Android for example) might run into problems displaying PDF files. We included PDFjs from Mozilla to display PDFs correctly. You can try this if you have problems. Warning: enable this if you are only using PDFs (other formats will result in an error)</description>
+            </property>
+        </properties>
+    </widget>

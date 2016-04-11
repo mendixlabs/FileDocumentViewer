@@ -30,6 +30,7 @@ require( [
         mfToExecute: '',
         messageString: '',
         backgroundColor: '',
+        usePDFjs: false,
 
         // Internal variables. Non-primitives created in the prototype are shared between all widget instances.
         _handle: null,
@@ -39,7 +40,7 @@ require( [
 
         // dijit._WidgetBase.postCreate is called after constructing the widget. Implement to do extra setup work.
         postCreate: function () {
-
+            console.log(this);
             if (!this.showheader) {
                 domStyle.set(this.toolbarNode, 'display', 'none');
                 domClass.add(this.groupboxBody, 'no-header');
@@ -66,7 +67,7 @@ require( [
 
         // mxui.widget._WidgetBase.update is called when context is changed or initialized. Implement to re-render and / or fetch data.
         update: function (obj, callback) {
-
+            console.log(obj);
             this._contextObj = obj;
             this._resetSubscriptions();
             this._updateRendering();
@@ -81,7 +82,15 @@ require( [
             this._iframeNodeCreate();
 
             if (this._contextObj && this._contextObj.get('HasContents'))  {
-                domAttr.set(this.iframeNode, 'src', this._getFileUrl());
+                if (this.usePDFjs/* && this._contextObj.get("Name").indexOf(".pdf") !== -1*/) {
+                    var pdfJSViewer = require.toUrl('FileDocumentViewer/lib/pdfjs/web/viewer.html').split("?")[0],
+                        encoded = pdfJSViewer + "?file=" + encodeURIComponent(mx.appUrl + this._getFileUrl());
+
+                    domAttr.set(this.iframeNode, 'src', encoded);
+                } else {
+                    domAttr.set(this.iframeNode, 'src', this._getFileUrl());
+                }
+
                 domAttr.set(this.headerTextNode, 'innerHTML',this._contextObj.get(this.headertitle));
             } else {
                 domAttr.set(this.iframeNode, 'src', require.toUrl('FileDocumentViewer/widget/ui/blank.html'))
