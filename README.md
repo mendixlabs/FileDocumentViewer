@@ -16,3 +16,7 @@ The widget tries to display a document inside a form, however it might fail to d
 
 * `Title` - String attribute of which the contents will be set in the header.
 * `Show header` - Determines whether or not a header will be rendered.
+
+## PDFJS support
+
+In the Modeler there is the option `Use PDF js`. This will take over the rendering of the PDF, because native rendering is not supported on Android. That is why we include [PDF.js](https://mozilla.github.io/pdf.js/), created by Mozilla (PDF.js is actually a part of Firefox). Make sure the documents you are trying to view are PDF files, otherwise the widget will fail to show the document. Use this option if you are having trouble viewing the documents on mobile devices for example.
