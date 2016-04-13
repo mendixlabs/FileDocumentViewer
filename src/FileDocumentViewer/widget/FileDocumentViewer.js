@@ -62,9 +62,14 @@ require( [
 
         update: function (obj, callback) {
             logger.debug(this.id + ".update");
-            this._contextObj = obj;
-            this._resetSubscriptions();
-            this._updateRendering(callback);
+
+            if (obj) {
+                this._contextObj = obj;
+                this._resetSubscriptions();
+                this._updateRendering(callback);
+            } else {
+                mendix.lang.nullExec(callback);
+            }
         },
 
         _updateRendering: function (callback) {
@@ -95,14 +100,16 @@ require( [
         _resetSubscriptions: function () {
             logger.debug(this.id + "._resetSubscriptions");
             if (this._handle) {
-                this.unsubscribe(this._handle);
+                mx.data.unsubscribe(this._handle);
                 this._handle = null;
             }
 
             if (this._contextObj) {
-                this._handle = this.subscribe({
+                this._handle = mx.data.subscribe({
                     guid: this._contextObj.getGuid(),
-                    callback: this._updateRendering
+                    callback: lang.hitch(this, function () {
+                        this._updateRendering();
+                    })
                 });
             }
         },
@@ -132,6 +139,14 @@ require( [
         _eventPopout : function () {
             logger.debug(this.id + "._eventPopout");
             window.open(this._getFileUrl());
+        },
+
+        uninitialize: function () {
+            if (this._handle) {
+                mx.data.unsubscribe(this._handle);
+                this._handle = null;
+            }
+            logger.debug(this.id + ".uninitialize");
         }
     });
 });
