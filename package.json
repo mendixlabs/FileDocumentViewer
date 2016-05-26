@@ -1,12 +1,11 @@
 {
   "name": "FileDocumentViewer",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "This widget lets you view file documents.",
   "license": "",
   "author": "",
   "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "1.0.1",
     "grunt-contrib-clean": "^1.0.0",
