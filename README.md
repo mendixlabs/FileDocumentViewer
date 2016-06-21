@@ -3,6 +3,8 @@ FileDocumentViewer
 
 This widget allows to embed and view any System.FileDocument object inside a form. In the modeler, using microflows or the file downloader, documents can be opened as download or inside a new window. With this widget however, files can be opened inside dataviews.
 
+Please take note that this will only work for Documents that can normally be viewed in the browser. We support viewing PDF either natively (Chrome, Firefox) or through PDF.js. Files like Word or Excel are usually not viewable in the browser. If you try this with the FileDocumentViewer, the browser will not view the document, but download it.
+
 ## Contributing
 For more information on contributing to this repository visit [Contributing to a GitHub repository](https://world.mendix.com/display/howto50/Contributing+to+a+GitHub+repository)!
 
