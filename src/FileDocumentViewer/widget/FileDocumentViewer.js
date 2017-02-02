@@ -68,7 +68,7 @@ require( [
                 this._resetSubscriptions();
                 this._updateRendering(callback);
             } else {
-                mendix.lang.nullExec(callback);
+                this._executeCallback(callback, "update");
             }
         },
 
@@ -94,18 +94,18 @@ require( [
                 domAttr.set(this.headerTextNode, "innerHTML","...");
             }
 
-            mendix.lang.nullExec(callback);
+            this._executeCallback(callback, "_updateRendering");
         },
 
         _resetSubscriptions: function () {
             logger.debug(this.id + "._resetSubscriptions");
             if (this._handle) {
-                mx.data.unsubscribe(this._handle);
+                this.unsubscribe(this._handle);
                 this._handle = null;
             }
 
             if (this._contextObj) {
-                this._handle = mx.data.subscribe({
+                this._handle = this.subscribe({
                     guid: this._contextObj.getGuid(),
                     callback: lang.hitch(this, function () {
                         this._updateRendering();
@@ -143,10 +143,17 @@ require( [
 
         uninitialize: function () {
             if (this._handle) {
-                mx.data.unsubscribe(this._handle);
+                this.unsubscribe(this._handle);
                 this._handle = null;
             }
             logger.debug(this.id + ".uninitialize");
+        },
+
+        _executeCallback: function (cb, from) {
+            logger.debug(this.id + "._executeCallback" + (from ? " from " + from : ""));
+            if (cb && typeof cb === "function") {
+                cb();
+            }
         }
     });
 });

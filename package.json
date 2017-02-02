@@ -1,12 +1,11 @@
 {
   "name": "FileDocumentViewer",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "This widget lets you view file documents.",
   "license": "",
   "author": "",
   "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "del": "^2.2.2",
     "gulp": "^3.9.1",
