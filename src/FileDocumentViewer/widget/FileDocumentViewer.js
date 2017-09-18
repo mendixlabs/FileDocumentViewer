@@ -125,7 +125,7 @@ require( [
             if (this._contextObj === null || this._contextObj.get("Name") === null) {
                 return require.toUrl("FileDocumentViewer/widget/ui/error.html");
             } else {
-                return "file?target=window&guid=" + this._contextObj.getGuid() + "&csrfToken=" + mx.session.getCSRFToken() + "&time=" + Date.now();
+                return "file?target=window&guid=" + this._contextObj.getGuid() + "&csrfToken=" + mx.session.getConfig('csrftoken') + "&time=" + Date.now();
             }
         },
 
