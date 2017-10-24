@@ -16,6 +16,11 @@
                     <attributeType name="String"/>
                 </attributeTypes>
             </property>
+            <property key="escapeTitle" type="boolean" defaultValue="true">
+               <caption>Escape title</caption>
+               <category>Appearance</category>
+               <description>Title can contain HTML, which can result in an XSS if not escaped. Keep this to 'true', only change it if necessary.</description>
+            </property>
             <property key="width" type="integer" defaultValue="0">
                 <caption>Width</caption>
                 <category>Appearance</category>

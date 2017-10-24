@@ -5,6 +5,7 @@ require( [
     "dijit/_TemplatedMixin",
     "mxui/dom",
     "dojo/dom",
+    "dojo/html",
     "dojo/query",
     "dojo/dom-class",
     "dojo/dom-attr",
@@ -13,7 +14,7 @@ require( [
     "dojo/_base/lang",
     "dojo/text",
     "dojo/text!FileDocumentViewer/widget/templates/FileDocumentViewer.html"
-], function (require, declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, domQuery, domClass, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
+], function (require, declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, dojoHtml, domQuery, domClass, domAttr, domConstruct, domStyle, lang, text, widgetTemplate) {
     "use strict";
 
     return declare("FileDocumentViewer.widget.FileDocumentViewer", [ _WidgetBase, _TemplatedMixin ], {
@@ -25,6 +26,7 @@ require( [
         messageString: "",
         backgroundColor: "",
         usePDFjs: false,
+        escapeTitle: true,
 
         // Internal variables.
         _handle: null,
@@ -88,7 +90,14 @@ require( [
                     domAttr.set(this.iframeNode, "src", this._getFileUrl());
                 }
 
-                domAttr.set(this.headerTextNode, "innerHTML",this._contextObj.get(this.headertitle));
+                var title;
+                if (this.escapeTitle) {
+                    title = dom.escapeString((this._contextObj.get(this.headertitle) || "").replace(/\n/g, " "));
+                } else {
+                    title = this._contextObj.get(this.headertitle);
+                }
+
+                dojoHtml.set(this.headerTextNode, title);
             } else {
                 domAttr.set(this.iframeNode, "src", require.toUrl("FileDocumentViewer/widget/ui/blank.html"));
                 domAttr.set(this.headerTextNode, "innerHTML","...");
