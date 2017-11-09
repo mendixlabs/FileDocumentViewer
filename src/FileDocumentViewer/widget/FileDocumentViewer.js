@@ -83,7 +83,7 @@ require( [
             if (this._contextObj && this._contextObj.get("HasContents"))  {
                 if (this.usePDFjs/* && this._contextObj.get("Name").indexOf(".pdf") !== -1*/) {
                     var pdfJSViewer = require.toUrl("FileDocumentViewer/lib/pdfjs/web/viewer.html").split("?")[0],
-                        encoded = pdfJSViewer + "?file=" + encodeURIComponent(mx.appUrl + this._getFileUrl());
+                        encoded = pdfJSViewer + "?file=" + encodeURIComponent(this._getFileUrl());
 
                     domAttr.set(this.iframeNode, "src", encoded);
                 } else {
@@ -131,10 +131,24 @@ require( [
 
         _getFileUrl : function () {
             logger.debug(this.id + "._getFileUrl");
+            var changedDate = Math.floor(Date.now() / 1); // Right now;
             if (this._contextObj === null || this._contextObj.get("Name") === null) {
                 return require.toUrl("FileDocumentViewer/widget/ui/error.html");
             } else {
-                return "file?target=window&guid=" + this._contextObj.getGuid() + "&csrfToken=" + mx.session.getConfig('csrftoken') + "&time=" + Date.now();
+                var guid = this._contextObj.getGuid();
+                var suffix = "&" + [
+                    "target=window",
+                    "csrfToken=" + mx.session.getConfig('csrftoken')
+                ].join("&");
+
+                if (mx.data.getDocumentUrl) {
+                    return mx.data.getDocumentUrl(guid, changedDate, false) + suffix;
+                } else {
+                    return mx.appUrl + "file?" + [
+                        "guid=" + guid,
+                        "changedDate=" + changedDate
+                    ].join("&") + suffix;
+                }
             }
         },
 
