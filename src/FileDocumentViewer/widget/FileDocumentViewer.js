@@ -31,11 +31,19 @@ require([
         hideDownload: false,
         hidePrint: false,
         hideOpenFile: false,
+        usePDFjsAttribute: "",
+        hideDownloadAttribute: "",
+        hidePrintAttribute: "",
+        hideOpenFileAttribute: "",
 
         // Internal variables.
         _handle: null,
         _contextObj: null,
         _objProperty: null,
+        _usePDFjs: null,
+        _hideDownload: null,
+        _hidePrint: null,
+        _hideOpenFile: null,
         iframeNode: null,
 
         postCreate: function () {
@@ -49,6 +57,11 @@ require([
             domStyle.set(this.domNode, {
                 "width": this.width === 0 ? "auto" : this.width + "px"
             });
+
+            this._usePDFjs = this.usePDFjs;
+            this._hideDownload = this.hideDownload;
+            this._hideOpenFile = this.hideOpenFile;
+            this._hidePrint = this.hidePrint;
 
             this._setupEvents();
         },
@@ -71,10 +84,31 @@ require([
 
             if (obj) {
                 this._contextObj = obj;
+                this._getSettings();
                 this._resetSubscriptions();
                 this._updateRendering(callback);
             } else {
                 this._executeCallback(callback, "update");
+            }
+        },
+
+        _getSettings: function() {
+            logger.debug(this.id + "._getSettings");
+
+            if (this.usePDFjsAttribute && this.usePDFjsAttribute.length) {
+                this._usePDFjs = this._contextObj.get(this.usePDFjsAttribute);
+            }
+
+            if (this.hideDownloadAttribute && this.hideDownloadAttribute.length) {
+                this._hideDownload = this._contextObj.get(this.hideDownloadAttribute);
+            }
+
+            if (this.hidePrintAttribute && this.hidePrintAttribute.length) {
+                this._hidePrint = this._contextObj.get(this.hidePrintAttribute);
+            }
+
+            if (this.hideOpenFileAttribute && this.hideOpenFileAttribute.length) {
+                this._hideOpenFile = this._contextObj.get(this.hideOpenFileAttribute);
             }
         },
 
@@ -85,15 +119,15 @@ require([
             this._iframeNodeCreate();
 
             if (this._contextObj && this._contextObj.get("HasContents")) {
-                if (this.usePDFjs /* && this._contextObj.get("Name").indexOf(".pdf") !== -1*/ ) {
+                if (this._usePDFjs /* && this._contextObj.get("Name").indexOf(".pdf") !== -1*/ ) {
                     var pdfJSViewer = require.toUrl("FileDocumentViewer/lib/pdfjs/web/viewer.html").split("?")[0],
                         encoded = pdfJSViewer + "?file=" + encodeURIComponent(this._getFileUrl());
 
                     domAttr.set(this.iframeNode, "src", encoded);
 
-                    if (this.hideDownload || this.hidePrint || this.hideOpenFile) {
+                    if (this._hideDownload || this._hidePrint || this._hideOpenFile) {
                         this.iframeNode.onload = lang.hitch(this, function(){
-                            dojoWindow.withDoc(this.iframeNode.contentWindow.document, lang.hitch(this, this._hideButtons))
+                            dojoWindow.withDoc(this.iframeNode.contentWindow.document, lang.hitch(this, this._hideButtonsFromUI))
                         })
                     }
                 } else {
@@ -162,16 +196,16 @@ require([
             }
         },
 
-        _hideButtons: function() {
+        _hideButtonsFromUI: function() {
             logger.debug(this.id + "._hideButtons");
             
-            if (this.hideDownload){
+            if (this._hideDownload){
                 domQuery('button.download').style('display','none');
             }
-            if (this.hidePrint){
+            if (this._hidePrint){
                 domQuery('button.print').style('display','none');
             }
-            if (this.hideOpenFile){
+            if (this._hideOpenFile){
                 domQuery('button.openFile').style('display', 'none');
             }
             

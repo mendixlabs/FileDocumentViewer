@@ -41,20 +41,52 @@
                 <category>PDF</category>
                 <description>Some browsers (Android for example) might run into problems displaying PDF files. We included PDFjs from Mozilla to display PDFs correctly. You can try this if you have problems. Warning: enable this if you are only using PDFs (other formats will result in an error)</description>
             </property>
+            <property key="usePDFjsAttribute" type="attribute" required="false">
+                <caption>Use PDF js (attribute)</caption>
+                <category>PDF</category>
+                <description>Set the "use PDF js" via an attribute of the context object. Overwrites the static "use PDF js" value. (optional)</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
+            </property>
             <property key="hideOpenFile" type="boolean" defaultValue="false">
                 <caption>Hide "Open file" button</caption>
                 <category>PDF</category>
                 <description>Hide the "Open File" button rendered by PDFjs</description>
+            </property>
+            <property key="hideOpenFileAttribute" type="attribute" required="false">
+                <caption>Hide "Open file" button (attribute)</caption>
+                <category>PDF</category>
+                <description>Set the "hide open file" via an attribute of the context object. Overwrites the static value. (optional)</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
             </property>
             <property key="hideDownload" type="boolean" defaultValue="false">
                 <caption>Hide "Download" button</caption>
                 <category>PDF</category>
                 <description>Hide the dowload button rendered by PDFjs</description>
             </property>
+            <property key="hideDownloadAttribute" type="attribute" required="false">
+                <caption>Hide "Download" button (attribute)</caption>
+                <category>PDF</category>
+                <description>Set the "hide download button" via an attribute of the context object. Overwrites the static value. (optional)</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
+            </property>
             <property key="hidePrint" type="boolean" defaultValue="false">
                 <caption>Hide "Print" button</caption>
                 <category>PDF</category>
                 <description>Hide the print button rendered by PDFjs</description>
+            </property>
+            <property key="hidePrintAttribute" type="attribute" required="false">
+                <caption>Hide "Print" button (attribute)</caption>
+                <category>PDF</category>
+                <description>Set the "hide print" via an attribute of the context object. Overwrites the static value. (optional)</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
             </property>
         </properties>
     </widget>
