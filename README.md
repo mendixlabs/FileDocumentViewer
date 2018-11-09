@@ -1,4 +1,4 @@
-FileDocumentViewer
+FileDocumentViewer [![Support](https://img.shields.io/badge/Mendix%20Support%3A-Platform-green.svg)](https://docs.mendix.com/community/app-store/app-store-content-support)
 ==================
 
 This widget allows to embed and view any System.FileDocument object inside a form. In the modeler, using microflows or the file downloader, documents can be opened as download or inside a new window. With this widget however, files can be opened inside dataviews.
